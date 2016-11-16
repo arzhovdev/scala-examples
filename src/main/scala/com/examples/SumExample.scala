@@ -1,16 +1,19 @@
 package com.examples
 
+import scala.annotation.tailrec
+
 /**
   * Sum function implementations
   */
-object SumExample extends App {
+object SumExample {
   /**
     * sum implementation
+    *
     * @param xs list of integers
     * @return sum of list elements
     */
   def sum(xs: List[Int]): Int = {
-     // if (xs.isEmpty) 0 else xs.head + sum(xs.tail)
+    // if (xs.isEmpty) 0 else xs.head + sum(xs.tail)
     if (xs.isEmpty) {
       0
     } else {
@@ -20,6 +23,7 @@ object SumExample extends App {
 
   /**
     * sum implementation using pattern matching
+    *
     * @param xs list of integers
     * @return sum of list elements
     */
@@ -28,6 +32,19 @@ object SumExample extends App {
     case n :: rest => n + sumPM(rest)
   }
 
-  println(sum(List(1, 2, 3)))
-  println(sumPM(List(1, 2, 3)))
+  /**
+    * sum implementation using tail recursion & pattern matching
+    *
+    * @param xs list of integers
+    * @return sum of list elements
+    */
+  def sumTR(xs: List[Int]): Int = {
+    @tailrec
+    def sumWithAccumulator(accumulator: Int, xs: List[Int]): Int = xs match {
+      case Nil => accumulator
+      case n :: rest => sumWithAccumulator(accumulator + n, rest)
+    }
+
+    sumWithAccumulator(0, xs)
+  }
 }
